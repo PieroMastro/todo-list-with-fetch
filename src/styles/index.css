@@ -1,12 +1,99 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-/* 
+body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100vh;
+    background-color: rgb(235, 233, 233);
+}
 
-    You can write your own styles here...
-    
-    
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
+.header {
+    color: rgb(184, 132, 132);
+    font-weight: lighter !important;
+    text-align: center;
+    display: auto;
+    margin: auto;
+    position: relative;
+}
 
-*/
+.list {
+    text-align: center;
+    display: auto;
+    margin: auto;
+    position: relative;
+}
+
+.input {
+    border-color: white;
+    color: dimgrey;
+    font-weight: lighter;
+    width: 100%;
+    height: 50px;
+    border: 0;
+    padding: 12px 0;
+    padding-left: 50px;
+    padding-right: 20px;
+    font-size: 20px;
+}
+
+.todolist {
+    display: auto;
+    margin: auto;
+    position: relative;
+    width: 100%;
+    margin: 2;
+    color: dimgrey;
+    font-weight: lighter;
+    border-top: 1px solid rgb(235, 234, 234);
+    padding: 12px 0;
+    padding-left: 50px;
+    padding-right: 20px;
+    font-size: 20px;
+}
+
+.form {
+    text-align: center;
+    display: auto;
+    margin: auto;
+    position: relative;
+    width: 500px;
+}
+
+textarea:focus,
+input:focus {
+    outline: none;
+}
+
+.button {
+    border: 0;
+    background-color: white;
+    padding-top: 6px;
+    text-align: center;
+    color: grey;
+    font-weight: lighter;
+}
+
+.button:hover {
+    color: darkred;
+    font-size: 22px;
+    font-weight: bolder;
+}
+
+.tasks {
+    display: auto;
+    margin: auto;
+    position: relative;
+    width: 100%;
+    color: dimgrey;
+    border-top: 1px solid rgb(235, 234, 234);
+    font-size: smaller;
+    font-weight: lighter;
+    padding: 8px;
+}
