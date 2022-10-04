@@ -1,10 +1,10 @@
-import { element } from "prop-types";
+
 import React, { useState, useEffect } from "react";
 
-//create your first component
 const Home = () => {
 
 	let initialState = { label: "", done: false }
+	let urlBase = "https://assets.breatheco.de/apis/fake/todos/user"
 	const [inputValue, setInputValue] = useState(initialState)
 	const [list, setList] = useState([]);
 
@@ -17,7 +17,7 @@ const Home = () => {
 
 	const getTasks = async () => {
 		try {
-			let response = await fetch(`https://assets.breatheco.de/apis/fake/todos/user/pieromastro`)
+			let response = await fetch(`${urlBase}/pieromastro`)
 			let data = await response.json()
 			console.log(response.status);
 			if (response.status == 404) {
@@ -31,9 +31,10 @@ const Home = () => {
 			console.log(error);
 		}
 	}
+
 	const createTodos = async () => {
 		try {
-			let response = await fetch(`https://assets.breatheco.de/apis/fake/todos/user/pieromastro`, {
+			let response = await fetch(`${urlBase}/pieromastro`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify([])
@@ -46,6 +47,52 @@ const Home = () => {
 			console.log(error);
 		}
 	}
+
+	const addTask = async () => {
+		try {
+			let response = await fetch(`${urlBase}/pieromastro`, {
+				method: "PUT",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify([...list, inputValue])
+			})
+			if (response.ok) {
+				getTasks();
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	const deleteTask = async (id) => {
+		let newListTask = list.filter((item, index) => id !== index)
+		try {
+			let response = await fetch(`${urlBase}/pieromastro`, {
+				method: "PUT",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(newListTask)
+			})
+			if (response.ok) {
+				getTasks();
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	const deleteAllTasks = async () => {
+		try {
+			let response = await fetch(`${urlBase}/pieromastro`, {
+				method: "DELETE",
+				headers: { "Content-Type": "application/json" }
+			})
+			if (response.ok) {
+				getTasks()
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
 	useEffect(() => { getTasks() }, [])
 
 	return (
@@ -59,7 +106,8 @@ const Home = () => {
 						name="label"
 						onKeyDown={(event) => {
 							if (event.key === "Enter" && inputValue.label.trim() !== "") {
-								setList([...list, inputValue])
+								// setList([...list, inputValue])
+								addTask();
 								setInputValue(initialState)
 							}
 						}}
@@ -76,8 +124,7 @@ const Home = () => {
 							<button
 								className="button d-flex"
 								type="button"
-								onClick={(event) => setList(list.filter((element, id) => { return index !== id }))
-								}><i className="fa-regular fa-circle-xmark"></i></button>
+								onClick={() => { deleteTask(index) }}><i className="fa-regular fa-circle-xmark"></i></button>
 						</li>
 					})
 					}
@@ -87,6 +134,10 @@ const Home = () => {
 								list.length + " Tasks Left"
 					}
 					</span>
+					<button
+						className="btn btn-outline-danger mb-3 shadow"
+						type="button"
+						onClick={() => { deleteAllTasks() }}><em>Delete All Tasks!</em></button>
 				</div>
 			</div>
 		</div >
